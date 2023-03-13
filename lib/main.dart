@@ -21,11 +21,15 @@ Future<void> main() async {
   await Firebase.initializeApp();
   final prefs = await SharedPreferences.getInstance();
   email = prefs.getString('email');
+  phone = prefs.getString('phone');
+  name = prefs.getString('name');
   print(email);
   runApp(MyApp());
 }
 
 var email;
+var phone;
+var name;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

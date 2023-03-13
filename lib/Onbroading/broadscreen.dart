@@ -9,21 +9,25 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: controller,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          //lets add 3rd screen
-          OnboardingPage(
-            image: Image.asset('assets/images/delivery.png'),
-            title: "Quick & Fast Delivery",
-            description:
-                "We offers speedy delivery of your  within 30minutes at your doorstep.",
-            noOfScreen: 3,
-            onNextPressed: changeScreen,
-            currentScreenNo: 2,
-          ),
-        ],
+      backgroundColor: Colors.white,
+      body: Container(
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+        child: PageView(
+          controller: controller,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            //lets add 3rd screen
+            OnboardingPage(
+              image: Image.asset('assets/images/deimage.png'),
+              title: 'Easy Transaction and Payment',
+              description:
+                  "We provide quick delivery of your items at your door in a very brief time frame.",
+              noOfScreen: 3,
+              onNextPressed: changeScreen,
+              currentScreenNo: 2,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -10,7 +10,7 @@ class ThemeHelper {
       fillColor: Colors.white,
       filled: true,
       suffixIcon: icon1,
-      // contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      contentPadding: EdgeInsets.fromLTRB(10, 5, 10, 5),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
           borderSide: BorderSide(color: Colors.grey)),

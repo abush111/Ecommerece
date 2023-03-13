@@ -3,7 +3,6 @@ import 'package:flutterapp/Home/Home.dart';
 import 'package:flutterapp/Login/Login.dart';
 import 'package:flutterapp/Register/Register.dart';
 import 'package:flutterapp/page/screeen/Homescreen.dart';
-import 'package:flutterapp/page/screeen/Ordernotification.dart';
 
 import 'package:flutterapp/page/screeen/cartscreen.dart';
 import 'package:flutterapp/page/screeen/listView.dart';
@@ -32,7 +31,6 @@ class AppRoutes {
       Sign: (context) => RegistrationPage(),
       Signup: (context) => LoginPage(),
       Home: (context) => Homescreen(),
-      ordernoti: (context) => OrderNotification()
     };
   }
 }

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutterapp/Home/Listofprouct.dart';
@@ -9,8 +11,11 @@ import 'package:flutterapp/page/screeen/listView.dart';
 import 'package:flutterapp/widget/listproduct.dart';
 import 'package:provider/provider.dart';
 
+import '../../Home/Companylist.dart';
+
 class elctricHome extends StatelessWidget {
-  const elctricHome({super.key});
+  elctricHome({super.key});
+  var username;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +28,55 @@ class elctricHome extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.grey[700],
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FutureBuilder(
+                            future: _fetch(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState !=
+                                  ConnectionState.done)
+                                return Text("Loading data...Please wait");
+                              return Text(
+                                'Hi'
+                                " $username",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            " Wel come to  electronics shop",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Container(
-              margin: EdgeInsets.only(top: 40),
+              margin: EdgeInsets.only(top: 0),
               color: Colors.white,
               child: Container(
                 child: Padding(
@@ -39,19 +91,6 @@ class elctricHome extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.1,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.grey[700],
-                child: Center(
-                    child: Text(
-                  " Wel come to  electrician page",
-                  style: TextStyle(color: Colors.white),
-                )),
               ),
             ),
             Container(
@@ -78,21 +117,9 @@ class elctricHome extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width - 10,
-                    height: MediaQuery.of(context).size.height * 0.13,
-                    child: ListView.builder(
-                      itemCount: 3,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Listitem(
-                            index: index,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                      width: MediaQuery.of(context).size.width - 10,
+                      height: MediaQuery.of(context).size.height * 0.13,
+                      child: companyScreen()),
                 ],
               ),
             ),
@@ -102,7 +129,7 @@ class elctricHome extends StatelessWidget {
                 children: [
                   Container(
                     height: 50,
-                    width: MediaQuery.of(context).size.width - 10,
+                    width: MediaQuery.of(context).size.width * 0.5,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
@@ -116,6 +143,22 @@ class elctricHome extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      margin: EdgeInsets.only(left: 8),
+                      child: ElevatedButton(
+                        onPressed: (() {}),
+                        child: Text(' See all'),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return Color.fromRGBO(2, 22, 56, 1);
+                            }
+                            return Color.fromRGBO(2, 22, 56, 1);
+                          }),
+                        ),
+                      ))
                 ],
               ),
             ),
@@ -128,5 +171,19 @@ class elctricHome extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _fetch() async {
+    final firebaseUser = await FirebaseAuth.instance.currentUser;
+    if (firebaseUser != null)
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {
+        username = ds.data()!['name'];
+      }).catchError((e) {
+        print(e);
+      });
   }
 }

@@ -12,6 +12,7 @@ import 'package:flutterapp/route/route.dart';
 import 'package:alert/alert.dart';
 
 import '../Electrician/Electrician.dart';
+import '../Electrician/Electricianpage/electricHome.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -210,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: Text(
                                         'Sign In'.toUpperCase(),
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),

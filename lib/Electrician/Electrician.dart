@@ -26,11 +26,11 @@ class _ElectricianState extends State<Electrician> {
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Color.fromRGBO(2, 22, 56, 1),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(
-              left: 35.0,
+              left: 35,
             ),
             child: Center(
               child: SizedBox(
@@ -83,7 +83,7 @@ class _ElectricianState extends State<Electrician> {
         ],
       ),
       drawer: Maindrawer(),
-      body: const elctricHome(),
+      body: elctricHome(),
     );
   }
 

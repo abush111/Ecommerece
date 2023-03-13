@@ -67,7 +67,7 @@ class Feedlist extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(
                           fontSize: 15,
-                          color: Colors.black,
+                          color: Color.fromRGBO(2, 22, 56, 1),
                           fontWeight: FontWeight.w600),
                     ),
                     Padding(
@@ -97,18 +97,18 @@ class Feedlist extends StatelessWidget {
                                           (states) {
                                     if (states
                                         .contains(MaterialState.pressed)) {
-                                      return Colors.lightBlue;
+                                      return Color.fromRGBO(2, 22, 56, 1);
                                       ;
                                     }
-                                    return Colors.lightBlue;
+                                    return Color.fromRGBO(2, 22, 56, 1);
                                     ;
                                   }),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
                                           side: const BorderSide(
-                                              color: Color.fromRGBO(
-                                                  162, 184, 212, 1)),
+                                              color:
+                                                  Color.fromRGBO(2, 22, 56, 1)),
                                           borderRadius:
                                               BorderRadius.circular(44)))),
                               onPressed: (() {
@@ -136,7 +136,7 @@ class Feedlist extends StatelessWidget {
                               borderRadius: BorderRadius.circular(18.0),
                               child: Icon(
                                 Icons.more_horiz,
-                                color: Colors.grey,
+                                color: Colors.grey[700],
                               )),
                         )
                       ],

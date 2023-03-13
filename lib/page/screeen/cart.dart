@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/model/cartmodel.dart';
 import 'package:flutterapp/provider/cartprovider.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CartPdt extends StatefulWidget {
@@ -37,11 +37,11 @@ class _CartPdtState extends State<CartPdt> {
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             bottomRight: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
-            bottomLeft: Radius.circular(16.0),
-            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(6.0),
+            bottomLeft: Radius.circular(6.0),
+            topLeft: Radius.circular(6.0),
           ),
-          color: Theme.of(context).backgroundColor,
+          color: Colors.grey[700],
         ),
         child: Row(
           children: [
@@ -82,8 +82,8 @@ class _CartPdtState extends State<CartPdt> {
                             child: Container(
                               height: 50,
                               width: 50,
-                              child: Icon(
-                                Icons.cancel,
+                              child: FaIcon(
+                                FontAwesomeIcons.xmark,
                                 color: Colors.red,
                               ),
                             ),

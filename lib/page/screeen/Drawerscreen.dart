@@ -33,7 +33,7 @@ class _MaindrawerState extends State<Maindrawer> {
         children: [
           Container(
             width: double.infinity,
-            color: Colors.lightBlue,
+            color: Color.fromRGBO(2, 22, 56, 1),
             padding: EdgeInsets.all(40),
             child: Column(
               children: [
@@ -43,7 +43,7 @@ class _MaindrawerState extends State<Maindrawer> {
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage('assets/images/yar.jpg'),
+                        image: AssetImage('assets/images/profile.png'),
                         fit: BoxFit.fill,
                       )),
                 ),
@@ -54,7 +54,7 @@ class _MaindrawerState extends State<Maindrawer> {
                       return Text("Loading data...Please wait");
                     return Text(
                       " $myEmail",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white),
                     );
                   },
                 ),

@@ -9,7 +9,7 @@ class userManagement {
   storeNewUser(
     String email,
     String name,
-    String  phone,
+    String phone,
     String city,
     String house,
     String role,
@@ -20,6 +20,9 @@ class userManagement {
       'email': email,
       'name': name,
       'Role': role,
+      'house': house,
+      'phone': phone,
+      'city': city,
       'uid': Uuid,
     }).catchError((e) {
       print(e);

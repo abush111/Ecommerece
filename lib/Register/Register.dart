@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/Login/Login.dart';
 import 'package:flutterapp/Login/Themeheloer.dart';
 import 'package:flutterapp/Register/firebase.dart';
+import 'package:flutterapp/main.dart';
 import 'package:flutterapp/route/route.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
@@ -85,7 +88,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             Container(
               margin: EdgeInsets.fromLTRB(25, 50, 25, 10),
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
               alignment: Alignment.center,
               child: selectedItem == "Users"
                   ? Form(
@@ -169,6 +172,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Container(
                             child: TextFormField(
                               controller: cityname,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please Enter city';
+                                }
+                                return null;
+                              },
                               decoration: ThemeHelper().textInputDecoration(
                                   'City', 'Enter your City'),
                             ),
@@ -203,9 +212,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   "Mobile Number", "Enter your mobile number"),
                               keyboardType: TextInputType.phone,
                               validator: (val) {
-                                if (!(val!.isEmpty) &&
-                                    !RegExp(r"^(\d+)*$").hasMatch(val)) {
-                                  return "Enter a valid phone number";
+                                if (val!.isEmpty) {
+                                  return "Please enter your phone";
                                 }
                                 return null;
                               },
@@ -219,18 +227,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Container(
                             child: TextFormField(
                               controller: email,
-                              // validator: (val) =>
-                              //     val!.isEmpty || !val.contains("@")
-                              //         ? "Enter a valid eamil"
-                              //         : null,
                               decoration: ThemeHelper().textInputDecoration(
                                   "E-mail address", "Enter your email"),
                               keyboardType: TextInputType.emailAddress,
                               validator: (val) {
-                                if (!(val!.isEmpty) &&
-                                    !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                        .hasMatch(val)) {
-                                  return "Enter a valid email address";
+                                if (val!.isEmpty) {
+                                  return "Please enter your email";
                                 }
                                 return null;
                               },
@@ -277,7 +279,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration:
                                 ThemeHelper().inputBoxDecorationShaddow(),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
 
+                          Row(
+                            children: [
+                              Container(
+                                child: Text(
+                                  " Select role",
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.info),
+                              )
+                            ],
+                          ),
                           Container(
                             margin: EdgeInsets.only(top: 20, bottom: 20),
                             child: Row(
@@ -344,6 +363,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     SharedPreferences prefs =
                                         await SharedPreferences.getInstance();
                                     prefs.setString('email', email.text);
+                                    prefs.setString('phone', phone.text);
+                                    prefs.setString('name', firstname.text);
                                     var firebaseUser =
                                         await FirebaseAuth.instance.currentUser;
                                     userManagement().storeNewUser(
@@ -382,88 +403,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ])),
                           ),
                           // SizedBox(height: 30.0),
-                          Text(
-                            "Or create account using social media",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          SizedBox(height: 25.0),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              GestureDetector(
-                                child: FaIcon(
-                                  FontAwesomeIcons.googlePlus,
-                                  size: 35,
-                                  color: HexColor("#EC2D2F"),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Google Plus",
-                                            "You tap on GooglePlus social icon.",
-                                            context);
-                                      },
-                                    );
-                                  });
-                                },
-                              ),
                               SizedBox(
                                 width: 30.0,
-                              ),
-                              GestureDetector(
-                                child: Container(
-                                  padding: EdgeInsets.all(0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(
-                                        width: 5, color: HexColor("#40ABF0")),
-                                    color: HexColor("#40ABF0"),
-                                  ),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.twitter,
-                                    size: 23,
-                                    color: HexColor("#FFFFFF"),
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Twitter",
-                                            "You tap on Twitter social icon.",
-                                            context);
-                                      },
-                                    );
-                                  });
-                                },
-                              ),
-                              SizedBox(
-                                width: 30.0,
-                              ),
-                              GestureDetector(
-                                child: FaIcon(
-                                  FontAwesomeIcons.facebook,
-                                  size: 35,
-                                  color: HexColor("#3E529C"),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Facebook",
-                                            "You tap on Facebook social icon.",
-                                            context);
-                                      },
-                                    );
-                                  });
-                                },
                               ),
                             ],
                           ),
@@ -551,6 +496,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Container(
                             child: TextFormField(
                               controller: cityname,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please Enter  city';
+                                }
+                                return null;
+                              },
                               decoration: ThemeHelper().textInputDecoration(
                                   'City', 'Enter your City'),
                             ),
@@ -581,16 +532,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Container(
                             child: TextFormField(
                               controller: phone,
-                              decoration: ThemeHelper().textInputDecoration(
-                                  "Mobile Number", "Enter your mobile number"),
-                              keyboardType: TextInputType.phone,
                               validator: (val) {
-                                if (!(val!.isEmpty) &&
-                                    !RegExp(r"^(\d+)*$").hasMatch(val)) {
-                                  return "Enter a valid phone number";
+                                if (val!.isEmpty) {
+                                  return "Please enter your phone";
                                 }
                                 return null;
                               },
+                              decoration: ThemeHelper().textInputDecoration(
+                                  "Mobile Number", "Enter your mobile number"),
+                              keyboardType: TextInputType.phone,
                             ),
                             decoration:
                                 ThemeHelper().inputBoxDecorationShaddow(),
@@ -609,16 +559,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   "E-mail address", "Enter your email"),
                               keyboardType: TextInputType.emailAddress,
                               validator: (val) {
-                                if (!(val!.isEmpty) &&
-                                    !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                        .hasMatch(val)) {
-                                  return "Enter a valid email address";
+                                if (val!.isEmpty) {
+                                  return "Please enter your email";
                                 }
                                 return null;
                               },
                             ),
                             decoration:
                                 ThemeHelper().inputBoxDecorationShaddow(),
+                          ),
+
+                          SizedBox(
+                            height: 10,
                           ),
                           SizedBox(height: 20.0),
                           Container(
@@ -648,60 +600,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   ),
                                 ),
                               ),
-
-                              // validator: (val) {
-                              //   if (val!.isEmpty) {
-                              //     return "Please enter your password";
-                              //   }
-                              //   return null;
-                              // },
                             ),
                             decoration:
                                 ThemeHelper().inputBoxDecorationShaddow(),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
-                          SizedBox(
-                            child: TextFormField(
-                              // cursorColor: Colors.black,
-                              // cursorHeight: 25,
-                              keyboardType: TextInputType.url,
-                              onTap: () async {
-                                //  loadingController.forward();
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'License',
-                                suffixIcon: Icon(
-                                  Icons.upload_file,
-                                  color: Colors.black,
+                          Row(
+                            children: [
+                              Container(
+                                child: Text(
+                                  " Select role",
+                                  style: TextStyle(fontSize: 15),
                                 ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 1, color: Colors.grey.shade400),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                hintStyle: TextStyle(
-                                  color: Color.fromARGB(177, 0, 0, 0),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    width: 1,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                // Based on passwordVisible state choose the ic
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Upload Your  License ';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.info),
+                              )
+                            ],
                           ),
                           SizedBox(
                             height: 10,
@@ -712,7 +630,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             child: Row(
                               children: [
                                 Container(
-                                  child: Text(" Register as:"),
+                                  child: Text(
+                                    " Register as:",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
                                 ),
                                 Container(
                                   color: Colors.white,
@@ -757,7 +678,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 child: Text(
                                   "Sign Up".toUpperCase(),
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
@@ -772,7 +693,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       .then((signedInUser) async {
                                     SharedPreferences prefs =
                                         await SharedPreferences.getInstance();
-                                    prefs.setString('email', email.text);
+                                    prefs.setString(
+                                      'email',
+                                      email.text,
+                                    );
+                                    prefs.setString('phone', phone.text);
+                                    prefs.setString('name', firstname.text);
                                     var firebaseUser =
                                         await FirebaseAuth.instance.currentUser;
                                     userManagement().storeNewUser(
@@ -787,6 +713,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     print(e);
                                   });
                                   _showMyDialog();
+                                  setState(() {
+                                    //<-- Clear at the end
+                                  });
                                   // Navigator.of(context)
                                   //     .pushNamed(AppRoutes.Signup);
                                 }
@@ -806,96 +735,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   },
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 15,
                                     color: Theme.of(context).accentColor),
                               ),
                             ])),
                           ),
                           // SizedBox(height: 30.0),
-                          Text(
-                            "Or create account using social media",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          SizedBox(height: 25.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: FaIcon(
-                                  FontAwesomeIcons.googlePlus,
-                                  size: 35,
-                                  color: HexColor("#EC2D2F"),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Google Plus",
-                                            "You tap on GooglePlus social icon.",
-                                            context);
-                                      },
-                                    );
-                                  });
-                                },
-                              ),
-                              SizedBox(
-                                width: 30.0,
-                              ),
-                              GestureDetector(
-                                child: Container(
-                                  padding: EdgeInsets.all(0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(
-                                        width: 5, color: HexColor("#40ABF0")),
-                                    color: HexColor("#40ABF0"),
-                                  ),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.twitter,
-                                    size: 23,
-                                    color: HexColor("#FFFFFF"),
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Twitter",
-                                            "You tap on Twitter social icon.",
-                                            context);
-                                      },
-                                    );
-                                  });
-                                },
-                              ),
-                              SizedBox(
-                                width: 30.0,
-                              ),
-                              GestureDetector(
-                                child: FaIcon(
-                                  FontAwesomeIcons.facebook,
-                                  size: 35,
-                                  color: HexColor("#3E529C"),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Facebook",
-                                            "You tap on Facebook social icon.",
-                                            context);
-                                      },
-                                    );
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),

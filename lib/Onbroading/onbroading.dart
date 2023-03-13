@@ -17,12 +17,10 @@ class OnboardingPage extends StatelessWidget {
 
   final Image image;
 
-  final String title;
-
   final String description;
 
   final int noOfScreen;
-
+  final String title;
   final Function(int) onNextPressed;
 
   final int currentScreenNo;
@@ -30,83 +28,86 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isLastScreen = currentScreenNo >= noOfScreen - 1;
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Column(
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: [
+            Container(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   image,
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    title,
-                    style: TextStyle(fontSize: 30, color: Colors.teal.shade700),
-                  ),
-                  const SizedBox(
+                  SizedBox(
                     height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       description,
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   )
                 ],
               ),
-              Visibility(
-                visible: !isLastScreen,
-                replacement: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        width: 300,
-                        height: 50,
-                        margin: EdgeInsets.only(top: 30),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            final prefs = await SharedPreferences.getInstance();
+            ),
+            Visibility(
+              visible: !isLastScreen,
+              replacement: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 50,
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.05),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final prefs = await SharedPreferences.getInstance();
 
-                            var email = prefs.getString('email');
-                            email == null
-                                ? Navigator.of(context).pushNamed(
-                                    AppRoutes.Signup,
-                                  )
-                                : Navigator.of(context).pushNamed(
-                                    AppRoutes.Home,
-                                  );
-                          },
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return Colors.lightBlue;
-                                }
-                                return Colors.lightBlue;
-                              }),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                          color:
-                                              Color.fromRGBO(162, 184, 212, 1)),
-                                      borderRadius: BorderRadius.circular(6)))),
-                          child: Text("Get Started"),
-                        ))
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [],
-                ),
-              )
-            ],
-          ),
-        ));
+                          var email = prefs.getString('email');
+                          email == null
+                              ? Navigator.of(context).pushNamed(
+                                  AppRoutes.Signup,
+                                )
+                              : Navigator.of(context).pushNamed(
+                                  AppRoutes.Home,
+                                );
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith((states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return Color.fromRGBO(2, 22, 56, 1);
+                              }
+                              return Color.fromRGBO(2, 22, 56, 1);
+                            }),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                        color:
+                                            Color.fromRGBO(162, 184, 212, 1)),
+                                    borderRadius: BorderRadius.circular(6)))),
+                        child: Text("Get Start"),
+                      )),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   //Create a function to create progress dots

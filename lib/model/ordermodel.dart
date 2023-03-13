@@ -5,14 +5,19 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderItem {
+  final String name;
+  final String phone;
   final String id;
   final double amount;
   final List<CartItem> products;
   final DateTime dateTime;
 
   OrderItem({
+    required this.name,
+    required this.phone,
     required this.id,
     required this.amount,
     required this.products,
@@ -28,10 +33,16 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var name = prefs.getString('name');
+    var phone = prefs.getString('phone');
     final timeStamp = DateTime.now();
     try {
       FirebaseFirestore.instance.collection('usersTest').doc().set({
         'id': DateTime.now().toString(),
+        'name': name.toString(),
+        'phone': phone.toString(),
         'amount': total,
         'dateTime': timeStamp.toIso8601String(),
         'products': cartProducts
@@ -49,6 +60,8 @@ class Orders with ChangeNotifier {
       _orders.insert(
           0,
           OrderItem(
+              name: name.toString(),
+              phone: phone.toString(),
               id: DateTime.now().toString(),
               amount: total,
               dateTime: timeStamp,

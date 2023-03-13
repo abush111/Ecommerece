@@ -8,6 +8,7 @@ import 'package:flutterapp/route/route.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/cart';
@@ -184,6 +185,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
 
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+
     return Container(
       width: 100,
       child: ElevatedButton(
@@ -194,9 +196,11 @@ class _CheckoutButtonState extends State<CheckoutButton> {
         onPressed: widget.cart.totalAmount <= 0
             ? null
             : () async {
+              
                 _showMyDialog();
                 await Provider.of<Orders>(context, listen: false).addOrder(
                     widget.cart.getCartItems.values.toList(),
+                 
                     widget.cart.totalAmount);
 
                 cart.clearCart();

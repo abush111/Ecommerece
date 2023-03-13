@@ -41,7 +41,7 @@ class _SearchscreenState extends State<Searchscreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Color.fromRGBO(2, 22, 56, 1),
         toolbarHeight: 70,
         elevation: 0,
         title: Center(
@@ -63,8 +63,10 @@ class _SearchscreenState extends State<Searchscreen> {
                       style: BorderStyle.none,
                     ),
                   ),
-                  prefixIcon: Icon(
-                    Icons.search,
+                  prefixIcon: Container(
+                    child: Icon(
+                      Icons.search,
+                    ),
                   ),
                   hintText: 'Search',
                   filled: true,

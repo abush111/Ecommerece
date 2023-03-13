@@ -28,8 +28,9 @@ class Newproduct extends StatelessWidget {
     final prodAttr = productsAttributes.findById(productId!);
 
     return Scaffold(
+      backgroundColor: Color.fromRGBO(225, 225, 225, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(220, 220, 220, 1),
+        backgroundColor: Color.fromRGBO(2, 22, 56, 1),
         elevation: 0,
         actions: [
           Padding(
@@ -65,7 +66,7 @@ class Newproduct extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(220, 220, 220, 1),
+                color: Color.fromRGBO(2, 22, 56, 1),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),

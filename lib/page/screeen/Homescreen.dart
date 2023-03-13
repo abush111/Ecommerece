@@ -25,7 +25,7 @@ class _HomescreenState extends State<Homescreen> {
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Color.fromRGBO(2, 22, 56, 1),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(
@@ -82,7 +82,7 @@ class _HomescreenState extends State<Homescreen> {
         ],
       ),
       drawer: Maindrawer(),
-      body: const Homebody(),
+      body: Homebody(),
     );
   }
 
